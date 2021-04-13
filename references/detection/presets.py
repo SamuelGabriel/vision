@@ -3,7 +3,7 @@ import transforms as T
 
 class DetectionPresetTrain:
     def __init__(self, hflip_prob=0.5):
-        trans = [T.ToTensor()]
+        trans = [T.ToTensor(), normalize]
         if hflip_prob > 0:
             trans.append(T.RandomHorizontalFlip(hflip_prob))
 
@@ -15,7 +15,7 @@ class DetectionPresetTrain:
 
 class DetectionPresetEval:
     def __init__(self):
-        self.transforms = T.ToTensor()
+        self.transforms = T.Compose([T.ToTensor(),normalize])
 
     def __call__(self, img, target):
         return self.transforms(img, target)
